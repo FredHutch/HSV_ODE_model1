@@ -1,0 +1,137 @@
+#include <cstdlib>
+using namespace std;
+
+#include <stdio.h>
+#include <string.h>
+
+#include "global_state.h"
+
+globalState::globalState(void) 
+{
+	Max_x = MAX_X;
+	Max_y = MAX_Y;
+	Max_z = MAX_Z;
+
+	plotVe = 1;
+	plotVi = 0;
+	plotInf = 0;
+	plotCd8 = 0;
+
+	plotStyle1 = 1;
+	plotStyle2 = 0;
+
+	plotLogs = 1;
+	plotColor = 1;
+	plotRegions = 1;
+	writeOn = 0;
+	scrollAxes = 1;
+
+	plotOpt1 = 1;
+	plotOpt2 = 0;
+	plotOpt3 = 0;
+	plotOpt4 = 0;
+	plotOpt5 = 0;
+	plotOpt6 = 0;
+
+	max_vl = MAX_VIRAL_LOAD;
+	max_inf = MAX_INF_CELLS;
+	max_cd8s = MAX_CD8CELLS;
+	max_time = MAX_TIME;
+	max_ACV = 2.5;
+
+	use_rho = 1;
+	PDF_on = 0;
+	plot_bias=0;
+	hex_time_bias=0;
+	plot_span=10;
+	sampling=0.01;
+	statInterval=365.;
+	refresh=1.0;
+	gamma_hrs = 0;
+	absorb_hrs = 0;
+
+	Episode_limit=0;
+	Size_limit=0;
+	Sig_test=0;
+	Pulse_regions=0;
+	Cluster_pulses=0;
+	Total_doses=0;
+	infThreshold=0;
+
+	time_st = 0;
+
+	dataF1 = NULL;
+	dataF2 = NULL;
+	dataF3 = NULL;
+	dataF4 = NULL;
+	dataF5 = NULL;
+	dataF6 = NULL;
+	dataF7 = NULL;
+	dataF8 = NULL;
+	dataF9 = NULL;
+	dataF10 = NULL;
+	dataF11 = NULL;
+	dataF12 = NULL;
+	dataF13 = NULL;
+
+	points = NULL;
+	stopFlag = 0;
+	pauseFlag = 0;
+
+	Param_mask=0;
+	Input_refresh=0;
+	inp_file=NULL;
+	alt_inp_file=NULL;
+
+	Model_0 = 0;
+	Model_2 = 0;
+	Model_3 = 0;
+	CritOn = 1;
+	crit_start = 0;
+	AutoSnapshot=0;
+	SnapshotInterval=5;
+	maxCoitalActs=0;
+
+	Total_epis = 0;
+	T0_files = 10;
+	T2_Sim = 0.;
+	T3_Sim = 0.;
+	Cmax_0 = 0.0;
+
+	time=0;
+
+	sample_index=0;
+
+	for (int i=0; i < MAX_CRIT_CATEGORIES;i++)
+	    critWeight[i] = 1;
+
+	for (int i=0; i < MAX_HEXCELLS;i++)
+	{
+	    vet[i] = (unsigned long int *)malloc(MAX_SAMPLES * sizeof (unsigned long int));
+	    vet[i][sample_index]=0;
+
+	    vit[i] = (unsigned long int *)malloc(MAX_SAMPLES * sizeof (unsigned long int));
+	    vit[i][sample_index]=0;
+
+	    inf[i] = (unsigned long int *)malloc(MAX_SAMPLES * sizeof (unsigned long int));
+	    inf[i][sample_index]=0;
+
+	    cd8[i] = (unsigned long int *)malloc(MAX_SAMPLES * sizeof (unsigned long int));
+	    cd8[i][sample_index]=0;
+
+	    color[i] = (int *)malloc(MAX_SAMPLES * sizeof (int));
+	    color[i][sample_index]=0;
+
+	    diam[i] = (double *)malloc(MAX_SAMPLES * sizeof (double));
+	    diam[i][sample_index]=0.0;
+
+	    repro[i] = (double *)malloc(MAX_SAMPLES * sizeof (double));
+	    repro[i][sample_index]=0.0;
+	}
+}
+
+globalState::~globalState(void) 
+{
+	if (points != NULL)
+	    delete points;
+}
