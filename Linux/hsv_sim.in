@@ -18,7 +18,7 @@ fpos 0.01
 swabInterval 1.
 N_runs 1
 Threading 25
-Fit_model 1
+Fit_model 0
 Calc_T0 1
 Model 5
 Regions 300
