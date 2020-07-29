@@ -1,0 +1,17 @@
+The criteria file is used to supply cohort statistics on HSV viral shedding from a given study.  The categories used are
+listed below.  An example criteria file, hsv_sim.crit, is provided in the Linux directory.
+
+The file contains 10 categories of criteria.  Each is divided into a number of bins (histograms).  The format for each bin is the
+following (space delineated): target lower and upper 95% CIs and mean values.  Teh categories and bin counts are as follows:
+
+1. Cumulative percent pos swabs (9 bins)
+2. Episode rate (1 bin)
+3. Maximum log VL histograms (8 bins)
+4. First pos VL histograms (7 bins)
+5. Last pos VL histograms (6 bins)
+6. Avg rise rate (1 bin)
+7. Avg fall rate (1 bin)
+8. Episode duration (1 bin)
+8. Avg reproductive number (1 bin)
+9. Peak VLdistribution bins (10 bin)
+

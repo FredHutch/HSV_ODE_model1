@@ -1,0 +1,51 @@
+The program "hsv_sim" is builtin using "make" in the Linux subdirectory.  For building requirements, see the file BUILDING.
+The program requires an input file (hsv_sim.in by default) and a "criteria" file (hsv_sim.crit by default).
+The input file pairs input variable names with values placing one per line.  Names may appear multiple times,
+but only the last value will be used.  In addition to fixed parameters, the user may supply upper and lower bounds
+for a pre-defined set of parameters.  The program will attemot to optimize the output by performing a latin-
+hypercube search of the parameter space.  This capability was abandoned early on for parallel searching on a cluster
+using distributions of variable values that were appended to input files in multiple directories which were then used 
+to obtain scored outputs in a parallel fashion.  Input variable details are provided in the file INPUTS.  Some scripts 
+used in fitting pairs of parameters are included in the scripts directory and described in the README.md file therein.
+
+The criteria file is used to supply cohort statistics on HSV viral shedding from a given study.  The categories used are
+detailed in the file CRITERIA.
+
+Finally, the program can be used to generate several different output files.  The most basic (set with -w 1 option)
+contains time history date for overall viral load.  Other files can be used to output other summary statistics or
+statistics by spatial region.  There are 200 spatial regions by default, layed out as a hexagonally "hive".
+
+Usage: ./hsv_sim [-h][-d][-b][-f <input_file>][-c <crit file>][-n <cells>[-r][-s <seed>][-v][-w <write_mask>][-W <crit><weight>]
+	-h = this help
+	-f = optional input file
+	-c = optional criteria file
+		Format: target lower and upper CIs and mean values for...
+			 cumul percent pos swabs (9 bins)
+			 episode rate (1 bin)
+			 peak log VL histograms (8 bins)
+			 first pos VL histograms (7 bins)
+			 last pos VL histograms (6 bins)
+			 avg rise rate (1 bin)
+			 avg fall rate (1 bin)
+			 avg reproductive number (1 bin)
+			 peak distribution bins (10 bin)
+	-w <write_mask> = which output (csv) files to generate (Bit-mask 1-13)
+		1= cumul & regional ve vs time
+		2= ve current episode episode
+		3= cumul & regional vi vs time
+		4= vi current episode episode
+		5= cumul & regional inf cells vs time
+		6= inf cells current episode episode
+		7= regional plq diameters vs time
+		8= regional R0s vs time
+		9= run stats (per run)
+		10= transmission info
+		11= episode stats (per run)
+		12= more detailed regional info
+		13= ACV dosing info
+	-b = batch mode (no GUI)
+	-d = deterministic mode (no distributional draws)
+	-n = change the size of the hive (max = 1000)
+	-W = change weighting of a scoring criteria
+	-v = verbose messages
+

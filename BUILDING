@@ -1,0 +1,18 @@
+   The simplest way to compile the required objects and executable is to do the following:
+
+  1. "cd" to the "Linux" directory containing the package's source code and type
+
+  2. Set GTKGLEXT environment variable to location of gtkglext installation (required)
+     Alternatively, you can clone the GIT repository using the command below and set the 
+     environment variable to the extra_libs directory contained in it. 
+
+     git clone https://github.com/FredHutch/HSV_models
+
+  3. Load Mesa module (if UBUNTU) - "ml Mesa"
+
+        Depending on your UBUNTU version other modules may also be required including:
+        GSL,GLib,GTK+ (2.x),libGLU and Pango (version with pangox)
+
+  4. Type `make' to compile the hsv_sim executable.
+
+Note: This early version of the C++ program uses GTK+ version 2.x and has not been ported to GTK+ 3.0.

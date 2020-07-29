@@ -1,0 +1,221 @@
+The input files to the program "hsv_sim" must be in the format 
+<variable1> <value1>
+<variable2> <value2>
+...
+With just one variable per line.  Some variables are integers while others use floating point foramt.
+There is a sample input file in the Linux directory (hsv_sim.in).
+
+The variables available for setting can be grouped into those for simulation control, graphical output,
+fitting and fixed variables.  The variable names, sample values and descriptions are shown below in
+groups identified by the above categories:
+
+Simulation Control Variables
+===========================
+Variable,Sample,value,Description
+Calc_T0,1,Flag to calculate initial T cell populations in each region
+Crit_mask,255,Mask to include various criteria (shedding, etc.) in the composite score
+crit_start,0,when in the run to turn on criteria matching (optional)
+Episode_limit,0,Stop a run after this many patient episodes (if != 0)
+Fit_model,1,Use special in program fitting (deprecated - see next section)
+Input_refresh,100,time in days at which to reread input file parameters
+Match_strategy,2,Flag to control matching (distance from mean or distance outside of CI range)
+Model,5,Which model to run (1-4 are deprecated, 6 & 7 have ACV)
+Model_0,5,Model to run during T cell initialization (for T0_Sim time)
+Model_2,7,Which model to switch to after TSim time (ex. to turn on drug dosing)
+Model_3,5,Which model to switah to after TSim+T2_Sim time (optional)
+N_runs,1,How many runs (patients)
+PDF_on,0,Flag to use mean/sd instead of low/high to pick values (optional)
+Printmax,1,Used to enable printing criteria info to the output
+refresh,0.5,Interval in days for updating the graphical outputs
+Sampling,0.05,Interval in days for updating the data files
+Size_limit,0,stop after plaque of this size (if != 0)
+statInterval,10,how often to print stats to the screen
+T0_Sim,1095.,How many days to run when establishing T cell populations (no recording or scoring)
+Tdelay_on,0,Tri-phasic delay on T cell decline (optional)
+Threading,25,Number of threads to launch (optional)
+Total_epis,0,Stop simulation after this many total episodes (if != 0)
+T0_files,25,number of T0 files to cache
+Transmission_on,0,Stop after this many transmissions (if != 0)
+TSim,365.,How many days to run (post-initialzation phase)
+T2_Sim,100,How long to run secondary model (after TSim) (optional)
+T3_Sim,100,How long to run tertiary model (after TSim+T2_Sim) (optional)
+tstep,0.01,Time-step for tau-leap algorithm
+Verbose,0,Verbosity of diagnostic messages when running (optional)
+writeOn,0,Enable data file writing (also set w/ -w option) (optional)
+
+Fitting Control Variables (initially these controlled auto-fitting)
+=========================
+Bvstop_walk,1,Used in random walks for in run fitting (deprecated)
+Max_steps,1,Used in random walks for in run fitting (deprecated)
+Param_mask,1,Used in random walks for in run fitting (also used by "perl" fitting scripts)
+Rand_start,1,Used in random walks for in run fitting (deprecated)
+Search_order,0,Used in random walks for in run fitting (deprecated)
+Sig_test,0,Used in random walks for in run fitting (deprecated)
+squeeze,1,Used by perl fitting scripts (outside program - not required)
+Stop_walk,1,Used in random walks for in run fitting (deprecated)
+Tolerance,0.1,Used in random walks for in run fitting (deprecated)
+
+Fixed Parameters
+=========================
+absorb_hrs,1,drug absorption time is in hours
+alatent,6,Death rate for latently infected cells
+an,1.2,Death rate for actively infected cells
+bolus,7,Drug interval in days
+Cluster_pulses,0,Special setting to release into same region
+Cmax_0,3.71,Cmax for 1st dose
+db,0.022,Birth rate of susceptible cells
+del1,14,Delay on T cell decline (triphasic)
+fpos,0.01,T Cell kill rate
+gamma_hrs,1,drug decay is in hours
+Iacto,0,Deprecated (models 2 & 3)
+Ilato,0,Deprecated (models 1 & 2)
+infThreshold,10,
+Io,0,Initial number of infected cells
+maxCoitalActs,100,Run until this many coital acts (randomly distributed)
+N0,5e7,Initial number of cells overall
+Pulse_neuron,0,Use pulse vs drip of virus from neurons
+Pulse_regions,0,
+Regions,300,Regions in the "hive" (max = 1000)
+swabInterval,1.,How often to "swab"
+Total_doses,10,total drug doses in regime
+Yo,0,Deprecated (models 1 - 3)
+yy,1.0,Neuronal "pulse" width
+Zo,0,Deprecated (models 1 - 3)
+
+Fitting or "Drawn" Variables (_high/_low used based on Param_mask; _mean/_std used if PDF_on; otherwise uses "_init")
+=====================================================================================
+    Param_mask uses a bit mask where 2^0=var1,2^1=var2,etc... in the following order:
+      beta,vburstrate,2^2=log p,c,theta,inf,rinf,delta,betae,rho,eclipse,betaun,Cmax,IC50,m,gamma,absorb
+	so Param_mask=7 means vary beta, vburstrate and log p together using high/low range.
+    (Note: high/low ranges also used by external scripts to guide fitting decisions - see scripts directory)
+
+absorb_high,0.017,Drug absorption parameter (ACV)
+absorb_init,0.0574037229734,
+absorb_low,0.017,
+absorb_mean,0.017,
+absorb_std,0.,
+
+betae_high,3.15e-11,Infectivity of extra-cellular virus
+betae_init,2.15e-11,
+betae_low,1.15e-11,
+betae_mean,2.7e-11,
+betae_std,1e-11,
+
+beta_high,6.7e-08,Infectivity of within region virus
+beta_init,5.7e-08,
+beta_low,4.7e-08,
+beta_mean,5.4e-08,
+beta_std,2.4e-8,
+
+c_high,12.,Viral clearance rate
+c_init,10.,
+c_low,8.,
+c_mean,8.8,
+c_std,1.8,
+
+Cmax_high,3.71,Drug CMax (ACV)
+Cmax_init,3.71,
+Cmax_low,3.71,
+Cmax_mean,1.34029050493,
+Cmax_std,0,
+
+delta_high,5.0e-3,T cell death rate
+delta_init,1.47e-3,
+delta_low,1.e-4,
+delta_mean,1.47e-3,
+delta_std,3.5e-4,
+
+eclipse_high,0.95,Eclipse phase before viral production
+eclipse_init,0.85,
+eclipse_low,0.75,
+eclipse_mean,0.96,
+eclipse_std,0.43,
+
+gamma_high,0.286,Drug clearance rate
+gamma_init,0.117179226713,
+gamma_init,0.286,
+gamma_low,0.286,
+gamma_mean,0.286,
+gamma_std,0.,
+
+IC50_high,0.75407747489,Drug IC50 (ACV)
+IC50_high,3.026,
+IC50_init,0.75407747489,
+IC50_init,3.026,
+IC50_low,0.75407747489,
+IC50_low,3.026,
+IC50_mean,0.75407747489,
+IC50_std,0.75407747489,
+
+inf_high,200000,T Cell Remote Infusion rate
+inf_init,150000,
+inf_low,100000,
+inf_mean,0,
+inf_std,0,
+
+log_betaun_high,-12.6,Log Infectivity for transmission
+log_betaun_init,-10.5,
+log_betaun_low,-12.6,
+
+log_p_high,5.5,Log viral production per cell per day
+log_p_init,5.0,
+log_p_low,4.5,
+log_p_mean,4.5,
+log_p_std,4.5,
+
+m_high,2,Drug hill coefficient
+m_init,2,
+m_low,2,
+m_mean,1.19920316882,
+m_std,1.19920316882,
+
+rho_high,0.78,T cell cooperativity setting
+rho_init,0.68,
+rho_low,0.58,
+rho_mean,0.90,
+rho_std,0.78,
+
+rinf_high,300000,T cell remote infusion IC50
+rinf_init,200000,
+rinf_low,100000,
+rinf_mean,0,
+rinf_std,0,
+
+r_high,42.25,T cell infusion IC50
+r_init,39.25,
+r_low,36.25,
+r_mean,42.,
+r_std,12,
+
+theta_high,3.2,T cell infusion rate (max)
+theta_init,2.8,
+theta_low,2.4,
+theta_mean,2.84,
+theta_std,1.,
+
+vburstrate_high,100.,Neuronal drip rate (virions per day)
+vburstrate_init,80.0,
+vburstrate_low,60.,
+vburstrate_mean,82,
+vburstrate_std,37,
+
+Graphical control Parameters
+=========================
+AutoSnapshot,0,Enables screen shots a interval specified
+SnapshotInterval,1,Screen shot interval in days
+plot_span,50,width of time history plot in days
+plotStyle1,1,Turns on time-history graph
+plotOpt1,1,enables spatial display of Ve
+plotOpt2,1,enables spatial display of Vi
+plotOpt3,1,enables spatial display of Inf cells
+plotOpt4,1,enables spatial display of CD8s
+plotOpt5,1,enables spatial display of R0
+plotOpt6,1,enables spatial display of Ve
+plotVe,1,enables time history plotting of Ve
+plotVi,1,enables time history plotting of Vi
+plotInf,1,enables time history plotting of Inf cells
+plotCd8,1,enables time history plotting of CD8 T cells
+plotACV,1,enables time history plotting of drug concentration
+plotRegions,1,enables time history tracing by region
+plotColor,1,enables use of color in spatial regions 
+plotLogs,1,enables disply of log values in spatial regions
