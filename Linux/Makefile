@@ -12,8 +12,9 @@
 # even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE.
 
-GTKGLEXT_LIB = -L$(EXTRA_LIBS)
-GTKGLEXT_INC = -I$(EXTRA_LIBS)/include/ -I$(EXTRA_LIBS)/include/gtkglext-1.0
+PANGOX_LIB = -L$(PANGOX)/lib
+GTKGLEXT_LIB = -L$(GTKGLEXT) -L$(GTKGLEXT)/lib
+GTKGLEXT_INC = -I$(GTKGLEXT)/include -I$(GTKGLEXT)/include/gtkglext-1.0 -I$(GTKGLEXT)/lib/gtkglext-1.0/include
 
 CC            = gcc
 CXX           = g++
@@ -25,7 +26,7 @@ LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
 INCPATH       = -I. $(GTKGLEXT_INC) $(BASE_GTK_INCS) -I/usr/include -I../include -I/usr/X11R6/include -I.
 
-GTKLIBS	      = $(GTKGLEXT_LIB) -lgtkglext-x11-1.0 -lgdkglext-x11-1.0 -lGLU -lGL  -L/usr/lib/x86_64-linux-gnu \
+GTKLIBS	      = $(GTKGLEXT_LIB) $(PANGOX_LIB) -lgtkglext-x11-1.0 -lgdkglext-x11-1.0 -lGLU -lGL  -L/usr/lib/x86_64-linux-gnu \
 		-lXt  -lSM -lICE -Wl,--export-dynamic -lX11 -lgtk-x11-2.0 \
 		-lgdk-x11-2.0 -latk-1.0 -lgio-2.0 -lpangoft2-1.0 -lgdk_pixbuf-2.0 \
 		-lpangocairo-1.0 -lcairo -lpango-1.0 -lfreetype -lfontconfig -lgobject-2.0 \
@@ -51,7 +52,7 @@ MOVE          = mv -f
 CHK_DIR_EXISTS= test -d
 MKDIR         = mkdir -p
 
-all: hsv_sim$(EXEEXT)
+all: hsv_sim
 
 ####### Output directory
 
@@ -77,6 +78,7 @@ OBJECTS       = hsv_sim.o \
 		zoomin.o \
 		global_state.o
 
+
 first: all
 ####### Implicit rules
 
@@ -96,10 +98,6 @@ first: all
 
 .c.o:
 	$(CC) -c $(CFLAGS) $(INCPATH) -o "$@" "$<"
-
-####### Build rules
-
-all: hsv_sim
 
 ####### Compile
 
@@ -124,7 +122,6 @@ hsv_sim.o: ../src/hsv_sim.cpp
 
 hsv_sim:  $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o hsv_sim $(OBJECTS) $(OBJCOMP) $(LIBS)
-
 
 clean:
 	rm -f hsv_sim $(OBJECTS)
