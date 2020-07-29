@@ -1966,38 +1966,38 @@ void read_input_file(int refresh, char *inp_file, globalState *vars)
     SET_PARAMETER("fpos",fpos);
     SET_PARAMETER("swabInterval",swabInterval);
     SET_OPT_PARAMETER("statInterval",statInterval);
-    SET_PARAMETER("Tolerance",Tolerance);
+    SET_OPT_PARAMETER("Tolerance",Tolerance);
     SET_PARAMETER("refresh",refresh);
 
-    SET_INT_PARAMETER("del1",del1);
-    SET_INT_PARAMETER("Tdelay_on",Tdelay_on);
+    SET_OPT_INT_PARAMETER("del1",del1);
+    SET_OPT_INT_PARAMETER("Tdelay_on",Tdelay_on);
     SET_INT_PARAMETER("Tmin",Tmin);
     SET_INT_PARAMETER("N_runs",N_runs);
-    SET_INT_PARAMETER("Max_steps",Max_steps);
-    SET_INT_PARAMETER("Param_mask",Param_mask);
-    SET_INT_PARAMETER("Stop_walk",Stop_walk);
-    SET_INT_PARAMETER("Bvstop_walk",Bvstop_walk);
-    SET_INT_PARAMETER("Printmax",Printmax);
-    SET_INT_PARAMETER("Threading",Threading);
-    SET_INT_PARAMETER("Transmission_on",Transmission_on);
+    SET_OPT_INT_PARAMETER("Max_steps",Max_steps);
+    SET_OPT_INT_PARAMETER("Param_mask",Param_mask);
+    SET_OPT_INT_PARAMETER("Stop_walk",Stop_walk);
+    SET_OPT_INT_PARAMETER("Bvstop_walk",Bvstop_walk);
+    SET_OPT_INT_PARAMETER("Printmax",Printmax);
+    SET_OPT_INT_PARAMETER("Threading",Threading);
+    SET_OPT_INT_PARAMETER("Transmission_on",Transmission_on);
     SET_OPT_INT_PARAMETER("maxCoitalActs",maxCoitalActs);
 
-    SET_INT_PARAMETER("Fit_model",Fit_model);
-    SET_INT_PARAMETER("Rand_start",Rand_start);
+    SET_OPT_INT_PARAMETER("Fit_model",Fit_model);
+    SET_OPT_INT_PARAMETER("Rand_start",Rand_start);
     SET_INT_PARAMETER("Calc_T0",Calc_T0);
     SET_INT_PARAMETER("writeOn",writeOn);
     SET_INT_PARAMETER("Regions",Regions);
     SET_INT_PARAMETER("Crit_mask",Crit_mask);
     SET_INT_PARAMETER("Match_strategy",Match_strategy);
-    SET_INT_PARAMETER("Search_order",Search_order);
-    SET_INT_PARAMETER("Episode_limit",Episode_limit);
+    SET_OPT_INT_PARAMETER("Search_order",Search_order);
+    SET_OPT_INT_PARAMETER("Episode_limit",Episode_limit);
     SET_OPT_PARAMETER("Size_limit",Size_limit);
     SET_OPT_PARAMETER("crit_start",crit_start);
 
     SET_INT_PARAMETER("Model",Model);
     SET_OPT_INT_PARAMETER("Model_2",Model_2);
     SET_OPT_INT_PARAMETER("Model_3",Model_3);
-    SET_INT_PARAMETER("Verbose",Verbose);
+    SET_OPT_INT_PARAMETER("Verbose",Verbose);
     SET_OPT_INT_PARAMETER("Total_epis",Total_epis);
     SET_OPT_INT_PARAMETER("T0_files",T0_files);
     SET_PARAMETER("Sampling",sampling);
@@ -2011,14 +2011,14 @@ void read_input_file(int refresh, char *inp_file, globalState *vars)
 	SET_PARAMETER("Iacto",Iacto);
 	SET_PARAMETER("Ilato",Ilato);
     }
+    SET_OPT_INT_PARAMETER("PDF_on",PDF_on);
     if (vars->Model >= 4) 
     {
-	SET_INT_PARAMETER("Pulse_neuron",Pulse_neuron);
-	SET_INT_PARAMETER("Pulse_regions",Pulse_regions);
-	SET_INT_PARAMETER("Cluster_pulses",Cluster_pulses);
-	SET_INT_PARAMETER("Sig_test",Sig_test);
-	SET_INT_PARAMETER("yy",yy);
-	SET_PARAMETER("xx",xx);
+	SET_OPT_INT_PARAMETER("Pulse_neuron",Pulse_neuron);
+	SET_OPT_INT_PARAMETER("Pulse_regions",Pulse_regions);
+	SET_OPT_INT_PARAMETER("Cluster_pulses",Cluster_pulses);
+	SET_OPT_INT_PARAMETER("Sig_test",Sig_test);
+	SET_OPT_INT_PARAMETER("yy",yy);
 	SET_PARAMETER("betae_init",betae_init);
 	SET_PARAMETER("betae_low",betae_low);
 	SET_PARAMETER("betae_high",betae_high);
@@ -2032,7 +2032,6 @@ void read_input_file(int refresh, char *inp_file, globalState *vars)
     if (vars->Model >= 5) 
     {
 	SET_OPT_INT_PARAMETER("Model_0",Model_0);
-	SET_OPT_INT_PARAMETER("PDF_on",PDF_on);
 	SET_PARAMETER("gamma_init",gamma_init);
 	SET_PARAMETER("gamma_high",gamma_high);
 	SET_PARAMETER("gamma_low",gamma_low);
@@ -2084,6 +2083,9 @@ void read_input_file(int refresh, char *inp_file, globalState *vars)
 	SET_PARAMETER("eclipse_std",eclipse_std);
 	SET_PARAMETER("log_p_mean",log_p_mean);
 	SET_PARAMETER("log_p_std",log_p_std);
+	if (vars->PDF_on > 0) 
+	{
+	}
     }
     if (vars->Model == 8) 
     {
@@ -8897,6 +8899,7 @@ void usage(char *prog_name)
     fprintf(stderr,"\t\t\t last pos VL histograms (6 bins)\n");
     fprintf(stderr,"\t\t\t avg rise rate (1 bin)\n");
     fprintf(stderr,"\t\t\t avg fall rate (1 bin)\n");
+    fprintf(stderr,"\t\t\t episode duration bins (10 bin)\n");
     fprintf(stderr,"\t\t\t avg reproductive number (1 bin)\n");
     fprintf(stderr,"\t\t\t peak distribution bins (10 bin)\n");
     fprintf(stderr,"\t-w <write_mask> = which output (csv) files to generate (Bit-mask 1-13)\n");

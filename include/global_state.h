@@ -129,9 +129,6 @@ class globalState {
 	int gamma_hrs;
 	int absorb_hrs;
 
-	/* model 5 vars */
-	double xx;
-
 	/* transmission model variables */
 	double log_betaun_init;
 	double log_betaun_low;
